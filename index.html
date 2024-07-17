@@ -31,6 +31,10 @@
         .hidden {
             display: none;
         }
+        .output-container img {
+            width: 796px;  /* 이미지 너비를 50px로 설정 */
+            height: 562px; /* 이미지 높이를 50px로 설정 */
+        }
     </style>
 </head>
 <body>
@@ -57,7 +61,6 @@
         </div>
         <div id="output" class="output"></div>
     </div>
-
 
     <script>
         const graph = {
@@ -507,7 +510,18 @@
             document.getElementById('reset-language-button').textContent = textContent[lang].resetLanguage;
             document.getElementById('select-location-button').textContent = textContent[lang].selectLocation;
         };
+        const sortGraphValues = (graph) => {
+            for (let node in graph) {
+                const sortedKeys = Object.keys(graph[node]).sort();
+                const sortedObject = {};
+                sortedKeys.forEach(key => {
+                    sortedObject[key] = graph[node][key];
+                });
+                graph[node] = sortedObject;
+            }
+        };
 
+        sortGraphValues(graph);
         const 목적지 = (start, end) => {
             const q = [];
             const visited = {};
@@ -633,7 +647,11 @@
                             output += JapaneseKeys[step] + '\n';
                         }
                     });
-                    document.getElementById('output').textContent = output;
+                    document.getElementById('output').innerHTML = `
+                        <div class="output-container">
+                            <div>${output}</div>
+                            <img src="Webp.net-resizeimage.gif" alt="Result Image">
+                        </div>`;
                     document.getElementById('main-menu').classList.remove('hidden');
                 });
             });
@@ -652,7 +670,11 @@
                         output += JapaneseKeys[step] + '\n';
                     }
                 });
-                document.getElementById('output').textContent = output;
+                document.getElementById('output').innerHTML = `
+                    <div class="output-container">
+                        <div>${output}</div>
+                        <img src="Webp.net-resizeimage.gif" alt="Result Image">
+                    </div>`;
                 document.getElementById('main-menu').classList.remove('hidden');
             });
         };
