@@ -52,6 +52,7 @@
                 <option value="2">日本語</option>
             </select>
             <button onclick="setLanguage()">언어 설정</button>
+            <button id="MovePageButton" onclick="window.location.href='explain.html'">HTML 설명 보기</button>
         </div>
         <div id="main-menu" class="hidden">
             <button id="find-destination-button" onclick="findDestination()">목적지 찾기</button>
@@ -65,6 +66,9 @@
         </div>
         <div id="output" class="output"></div>
         <canvas id="mapCanvas" width="796" height="562"></canvas>
+        <div id="qrcode">
+            <button onclick="window.location.href='QRcode.HTML'">QR CODE</button>
+        </div>
     </div>
 
     <script>
@@ -200,7 +204,7 @@
     '수학교실2':{'수학교실1':9000,'후관 4층 우측 계단':6500},
     '후관 4층 화장실':{'후관 4층 우측 계단':2500},
     '후관 4층 우측 계단':{'수학교실2':6500,'후관 3층 우측계단':10000,'후관 4층 화장실':2500},
-    '세종관 입구':{'통로':15000,'매점':10000,'세종관 1층 중앙':6200},
+    '세종관 입구':{'계림동산':20000,'통로':15000,'매점':10000,'세종관 1층 중앙':6200},
     '세종관 1층 중앙':{'세종관 입구':6200,'진로진학상담부':3600,'세종관 1층 화장실':4250,'세종관 1층 계단':3000,'인문사회부':6200,'도서관':3600},
     '진로진학상담부':{'세종관 1층 중앙':3600},
     '세종관 1층 화장실':{'세종관 1층 중앙':4250},
@@ -214,6 +218,7 @@
     '매점':{'세종관 입구':10000,'창학관 - 세종관 이음길':10000},
     '경비실':{'본관 1층 좌측 계단':1},
     '창학관 - 세종관 이음길' : {'매점': 10000,'1층통로':10000},
+    '계림동산':{'세종관 입구':20000},
     };
 
     const EnglishKeys = {
@@ -359,6 +364,7 @@
         '매점':'store',
         '경비실':'A security office',
         '창학관 - 세종관 이음길':'Changhak Building - Road to Sejong Building',
+        '계림동산':'Gyelim-dongsan',
     };
 
     const JapaneseKeys = {
@@ -500,6 +506,7 @@
         '매점':'売店',
         '경비실':'警備室',
         '창학관 - 세종관 이음길':'チャンハク館 - 世宗館館の結ぶ道',
+        '계림동산':"鷄林洞山"
     };
         
         
@@ -516,7 +523,8 @@
                 resetLanguage: "언어 재설정",
                 selectLocation: "선택",
                 promptStart: "출발지를 선택하세요",
-                promptEnd: "도착지를 선택하세요"
+                promptEnd: "도착지를 선택하세요",
+                MovePageButton:"HTML 설명 보러가기"
             },
             1: {
                 title: "Gwangju HighSchool Navigation",
@@ -525,7 +533,8 @@
                 resetLanguage: "Change Language",
                 selectLocation: "Select",
                 promptStart: "Select Starting Point",
-                promptEnd: "Select Destination"
+                promptEnd: "Select Destination",
+                MovePageButton:"Go to HTML Description"
             },
             2: {
                 title: "光州高校のナビゲーション",
@@ -534,7 +543,8 @@
                 resetLanguage: "言語変更",
                 selectLocation: "選択",
                 promptStart: "出発地を選択してください",
-                promptEnd: "到着地を選択してください"
+                promptEnd: "到着地を選択してください",
+                MovePageButton:"HTML説明を見に行く"
             }
         };
 
@@ -555,7 +565,6 @@
                 graph[node] = sortedObject;
             }
         };
-
         sortGraphValues(graph);
         const 목적지 = (start, end) => {
             const q = [];
@@ -928,6 +937,7 @@
             '매점' : {x : 480, y : 100 },
             '경비실':{x:405, y : 500},
             '창학관 - 세종관 이음길': {x : 600, y : 160},
+            '계림동산': {x : 200, y : 100},
         }
     </script>
 </body>
