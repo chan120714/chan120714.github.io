@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
         }
         .container {
-            background-color: rgb(144, 244, 240);
+            background-color: rgb(250, 251, 248);
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -18,11 +18,12 @@
             text-align: center;
         }
         button, select, input {
-            background-color: rgb(237, 237, 237);
+            background-color: #f4f4f4;
             display: block;
             width: 100%;
             padding: 10px;
             margin: 10px 0;
+            text-align: center;
         }
         .hidden {
             display: none;
@@ -32,13 +33,19 @@
             background: url('Webp.net-resizeimage.gif') no-repeat center;
             background-size: contain;
         }
+        .output{
+            white-space: pre-wrap;
+            background-color: #f4f4f4;
+            padding: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 id="title">광주고 길찾기</h1>
         <div id="language-selection">
-            <label for="language">언어를 선택해주세요</label>
+            <label for="language" >언어를 선택해주세요</label>
             <select id="language">
                 <option value="0">한국어</option>
                 <option value="1">English</option>
@@ -56,6 +63,7 @@
             <select id="location-list"></select>
             <button id="select-location-button" onclick="selectLocation()">선택</button>
         </div>
+        <div id="output" class="output"></div>
         <canvas id="mapCanvas" width="796" height="562"></canvas>
     </div>
 
@@ -502,7 +510,7 @@
 
         const textContent = {
             0: {
-                title: "길찾기 및 화장실 찾기",
+                title: "광주고 네비게이션",
                 findDestination: "목적지 찾기",
                 findRestroom: "화장실 찾기",
                 resetLanguage: "언어 재설정",
@@ -511,7 +519,7 @@
                 promptEnd: "도착지를 선택하세요"
             },
             1: {
-                title: "Find Your Way and Restroom",
+                title: "Gwangju HighSchool Navigation",
                 findDestination: "Find Destination",
                 findRestroom: "Find Restroom",
                 resetLanguage: "Change Language",
@@ -520,7 +528,7 @@
                 promptEnd: "Select Destination"
             },
             2: {
-                title: "目的地検索及びトイレ検索",
+                title: "光州高校のナビゲーション",
                 findDestination: "目的地探し",
                 findRestroom: "トイレ探し",
                 resetLanguage: "言語変更",
@@ -721,7 +729,22 @@
                 위치설정('end', (selectedEnd) => {
                     end = selectedEnd;
                     const path = 목적지(start, end);
-                    drawPath(path);
+                    let output = '';
+                    k=1
+                    path.forEach(step => {
+                        if (lang == 0){
+                            output +=  k+'. '+step + '\n';
+                        }
+                        else if (lang == 1){
+                            output +=  k+'. '+EnglishKeys[step] + '\n';
+                        }
+                        else{
+                            output +=  k+'. '+JapaneseKeys[step] + '\n';
+                        }
+                        k+=1;
+                    })
+                    drawPath(path);                    
+                    document.getElementById('output').textContent = output;
                     document.getElementById('main-menu').classList.remove('hidden');
                 });
             });
@@ -730,6 +753,23 @@
         const findRestroom = () => {
             위치설정('start', (start) => {
                 const path = 화장실(start);
+                let output = '';
+                k=1
+                path.forEach(step => {
+                    if (lang == 0){
+                        output += k+'. '+step + '\n';
+                    }
+                    else if (lang == 1){
+                        output += k+'. '+EnglishKeys[step] + '\n';
+                    }
+                    else{
+                        output += k+'. '+JapaneseKeys[step] + '\n';
+                    }
+                    k+=1;
+                })
+                    drawPath(path);                    
+                    document.getElementById('output').textContent = output;
+                    document.getElementById('main-menu').classList.remove('hidden');
                 drawPath(path);
                 document.getElementById('main-menu').classList.remove('hidden');
             });
