@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.explain1 {
+    width: 500px ;
+}
+button{
+    background-color: #f4f4f4;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    text-align: center;
+}
+.qrcode{
+    display: flex;
+    justify-content: center;
+}
+.copyright{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
