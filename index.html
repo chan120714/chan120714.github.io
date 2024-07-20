@@ -8,10 +8,11 @@
     <style>
         canvas {
             border: 1px solid black;
-            background: url('Webp.net-resizeimage.gif') no-repeat center;
+            background: url('/image/Webp.net-resizeimage.gif') no-repeat center;
             background-size: contain;
         }
     </style>
+    <script type="module" src="\js\index.js"></script>
 </head>
 <body>
     <div class="container">
@@ -24,7 +25,7 @@
                 <option value="2">日本語</option>
             </select>
             <button onclick="setLanguage()">언어 설정</button>
-            <button id="MovePageButton" onclick="window.location.href='explain.html'">HTML 설명 보기</button>
+            <button id="MovePageButton" onclick="window.location.href='html/explain.html'">HTML 설명 보기</button>
         </div>
         <div id="main-menu" class="hidden">
             <button id="find-destination-button" onclick="findDestination()">목적지 찾기</button>
@@ -39,13 +40,11 @@
         <div id="output" class="output"></div>
         <canvas id="mapCanvas" width="796" height="562"></canvas>
         <div id="qrcode">
-            <button onclick="window.location.href='QRcode.HTML'">QR CODE</button>
+            <button onclick="window.location.href='html/QRcode.HTML'">QR CODE</button>
         </div>
         <div id="copyright">
             <a href="https://github.com/chan120714/chan120714.github.io">© Shin Chan-Young, 2024</a>
         </div>
     </div>
-
-    <script src="\js\index.js"></script>
 </body>
 </html>
