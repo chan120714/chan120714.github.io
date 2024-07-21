@@ -3,6 +3,7 @@ import graph from './graph.js';
 import JapaneseKeys from './JapaneseKeys.js';
 import EnglishKeys from './EnglishKeys.js';
 import drawPath from './drawPath.js';
+
 let lang = 0;
 let selectionCallback;
 
@@ -216,6 +217,7 @@ const findRestroom = () => {
         document.getElementById('main-menu').classList.remove('hidden');
     });
 };
+
 
 // 모든 함수들을 전역 스코프에 할당
 window.setLanguage = setLanguage;

@@ -40,7 +40,7 @@
 
 저희는 이걸로 프로젝트가 마무리 될 줄 알았습니다. (당시 코드 600줄)
 
-참고로, 파이썬으로 구현한 내용은 [여기](https://github.com/chan120714/gjhs_navigate)서 볼 수 있습니다.
+참고로, 파이썬으로 구현한 내용은 [여기](https://github.com/chan120714/chan120714/blob/main/%EC%9C%B5%ED%95%A9%EC%A3%BC%EC%A0%9C%ED%83%90%EA%B5%AC)서 볼 수 있습니다.
 
 ***
 
