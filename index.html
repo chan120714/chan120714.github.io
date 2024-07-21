@@ -12,13 +12,13 @@
             background-size: contain;
         }
     </style>
-    <script type="module" src="\js\index.js"></script>
+    <script type="module" src="/js/index.js"></script>
 </head>
 <body>
     <div class="container">
         <h1 id="title">광주고 길찾기</h1>
         <div id="language-selection">
-            <label for="language" >언어를 선택해주세요</label>
+            <label for="language">언어를 선택해주세요</label>
             <select id="language">
                 <option value="0">한국어</option>
                 <option value="1">English</option>
@@ -34,6 +34,10 @@
         </div>
         <div id="location-selection" class="hidden">
             <label id="location-prompt"></label>
+            <input list="locationlist" type="text" id="location-input" oninput="autocomplete(this.value)" />
+            <datalist id="locationlist"></datalist>
+            <div id="suggestions"></div>
+            <label id="location-list-label" for="location-list">또는 아래 목록에서 선택하세요:</label>
             <select id="location-list"></select>
             <button id="select-location-button" onclick="selectLocation()">선택</button>
         </div>

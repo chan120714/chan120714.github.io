@@ -18,7 +18,8 @@ const textContent = {
         selectLocation: "선택",
         promptStart: "출발지를 선택하세요",
         promptEnd: "도착지를 선택하세요",
-        MovePageButton:"HTML 설명 보러가기"
+        MovePageButton: "HTML 설명 보러가기",
+        locationListLabel: "또는 아래 목록에서 선택하세요:"
     },
     1: {
         title: "Gwangju HighSchool Navigation",
@@ -28,7 +29,8 @@ const textContent = {
         selectLocation: "Select",
         promptStart: "Select Starting Point",
         promptEnd: "Select Destination",
-        MovePageButton:"Go to HTML Description"
+        MovePageButton: "Go to HTML Description",
+        locationListLabel: "Or select from the list below:"
     },
     2: {
         title: "光州高校のナビゲーション",
@@ -38,7 +40,8 @@ const textContent = {
         selectLocation: "選択",
         promptStart: "出発地を選択してください",
         promptEnd: "到着地を選択してください",
-        MovePageButton:"HTML説明を見に行く"
+        MovePageButton: "HTML説明を見に行く",
+        locationListLabel: "または下のリストから選択してください:"
     }
 };
 
@@ -48,6 +51,16 @@ const updateTextContent = () => {
     document.getElementById('find-restroom-button').textContent = textContent[lang].findRestroom;
     document.getElementById('reset-language-button').textContent = textContent[lang].resetLanguage;
     document.getElementById('select-location-button').textContent = textContent[lang].selectLocation;
+    document.getElementById('location-list-label').textContent = textContent[lang].locationListLabel;
+
+    const dataList = document.getElementById('locationlist');
+    dataList.innerHTML = '';
+    nodes.forEach(node => {
+        const option = document.createElement('option');
+        option.value = node;
+        option.textContent = lang == 0 ? node : lang == 1 ? EnglishKeys[node] : JapaneseKeys[node];
+        dataList.appendChild(option);
+    });
 }
 
 const sortGraphValues = (graph) => {
@@ -135,14 +148,22 @@ const 위치설정 = (promptType, callback) => {
     const locationSelection = document.getElementById('location-selection');
     const locationPrompt = document.getElementById('location-prompt');
     const locationList = document.getElementById('location-list');
+    const locationInput = document.getElementById('location-input');
+    const dataList = document.getElementById('locationlist');
+
     locationPrompt.textContent = promptType === 'start' ? textContent[lang].promptStart : textContent[lang].promptEnd;
     locationList.innerHTML = '';
+    dataList.innerHTML = '';
 
     nodes.forEach((node, index) => {
         const option = document.createElement('option');
         option.value = node;
         option.textContent = lang == 0 ? node : lang == 1 ? EnglishKeys[node] : JapaneseKeys[node];
         locationList.appendChild(option);
+
+        const dataOption = document.createElement('option');
+        dataOption.value = node;
+        dataList.appendChild(dataOption);
     });
 
     selectionCallback = callback;
@@ -151,9 +172,41 @@ const 위치설정 = (promptType, callback) => {
 };
 
 const selectLocation = () => {
-    const selectedLocation = document.getElementById('location-list').value;
+    const locationInput = document.getElementById('location-input').value;
+    const locationList = document.getElementById('location-list').value;
+    const selectedLocation = locationInput || locationList;
+
+    // 입력된 값이 datalist에 있는지 확인
+    const dataListOptions = Array.from(document.getElementById('locationlist').options).map(option => option.value);
+    if (!dataListOptions.includes(locationInput) && locationInput) {
+        alert('입력된 값이 목록에 없습니다.');
+        document.getElementById('location-input').value = '';  // 입력 필드를 초기화합니다.
+        document.getElementById('location-selection').classList.add('hidden');
+        document.getElementById('language-selection').classList.remove('hidden');
+        document.getElementById('main-menu').classList.add('hidden');
+        return;
+    }
+
+    document.getElementById('location-input').value = '';  // 입력 필드를 초기화합니다.
     document.getElementById('location-selection').classList.add('hidden');
     selectionCallback(selectedLocation);
+};
+
+const autocomplete = (value) => {
+    const suggestions = document.getElementById('suggestions');
+    const regex = new RegExp(value, 'i');
+    const filteredNodes = nodes.filter(node => regex.test(node));
+
+    suggestions.innerHTML = '';
+    filteredNodes.forEach(node => {
+        const div = document.createElement('div');
+        div.textContent = lang == 0 ? node : lang == 1 ? EnglishKeys[node] : JapaneseKeys[node];
+        div.onclick = () => {
+            document.getElementById('location-input').value = node;
+            suggestions.innerHTML = '';
+        };
+        suggestions.appendChild(div);
+    });
 };
 
 const setLanguage = () => {
@@ -225,3 +278,4 @@ window.selectLocation = selectLocation;
 window.findDestination = findDestination;
 window.findRestroom = findRestroom;
 window.resetLanguage = resetLanguage;
+window.autocomplete = autocomplete;
